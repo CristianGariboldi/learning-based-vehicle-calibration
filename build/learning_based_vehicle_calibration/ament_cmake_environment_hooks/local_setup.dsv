@@ -1,4 +1,0 @@
-source;share/learning_based_vehicle_calibration/environment/ament_prefix_path.sh
-source;share/learning_based_vehicle_calibration/environment/library_path.sh
-source;share/learning_based_vehicle_calibration/environment/path.sh
-source;share/learning_based_vehicle_calibration/environment/pythonpath.sh
