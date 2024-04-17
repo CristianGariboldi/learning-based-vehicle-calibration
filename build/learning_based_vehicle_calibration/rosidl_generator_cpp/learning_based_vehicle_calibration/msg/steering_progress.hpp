@@ -1,0 +1,11 @@
+// generated from rosidl_generator_cpp/resource/idl.hpp.em
+// generated code does not contain a copyright notice
+
+#ifndef LEARNING_BASED_VEHICLE_CALIBRATION__MSG__STEERING_PROGRESS_HPP_
+#define LEARNING_BASED_VEHICLE_CALIBRATION__MSG__STEERING_PROGRESS_HPP_
+
+#include "learning_based_vehicle_calibration/msg/detail/steering_progress__struct.hpp"
+#include "learning_based_vehicle_calibration/msg/detail/steering_progress__builder.hpp"
+#include "learning_based_vehicle_calibration/msg/detail/steering_progress__traits.hpp"
+
+#endif  // LEARNING_BASED_VEHICLE_CALIBRATION__MSG__STEERING_PROGRESS_HPP_

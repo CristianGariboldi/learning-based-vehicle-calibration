@@ -1,0 +1,8 @@
+msg/LongitudinalProcesses.idl
+msg/LongitudinalProcesses.msg
+msg/LongitudinalProgress.idl
+msg/LongitudinalProgress.msg
+msg/SteeringProcesses.idl
+msg/SteeringProcesses.msg
+msg/SteeringProgress.idl
+msg/SteeringProgress.msg

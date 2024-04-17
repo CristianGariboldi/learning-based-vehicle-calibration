@@ -1,0 +1,9 @@
+{
+  "package_name": "learning_based_vehicle_calibration",
+  "non_idl_tuples": [
+    "/home/genesis/Desktop/calibration_ws/src/learning_based_vehicle_calibration:msg/LongitudinalProgress.msg",
+    "/home/genesis/Desktop/calibration_ws/src/learning_based_vehicle_calibration:msg/SteeringProgress.msg",
+    "/home/genesis/Desktop/calibration_ws/src/learning_based_vehicle_calibration:msg/LongitudinalProcesses.msg",
+    "/home/genesis/Desktop/calibration_ws/src/learning_based_vehicle_calibration:msg/SteeringProcesses.msg"
+  ]
+}

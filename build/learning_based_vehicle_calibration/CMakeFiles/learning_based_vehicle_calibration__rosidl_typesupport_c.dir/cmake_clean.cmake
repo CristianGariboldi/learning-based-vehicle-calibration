@@ -1,0 +1,21 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/longitudinal_processes__type_support.cpp.o"
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/longitudinal_processes__type_support.cpp.o.d"
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/longitudinal_progress__type_support.cpp.o"
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/longitudinal_progress__type_support.cpp.o.d"
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/steering_processes__type_support.cpp.o"
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/steering_processes__type_support.cpp.o.d"
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/steering_progress__type_support.cpp.o"
+  "CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/rosidl_typesupport_c/learning_based_vehicle_calibration/msg/steering_progress__type_support.cpp.o.d"
+  "liblearning_based_vehicle_calibration__rosidl_typesupport_c.pdb"
+  "liblearning_based_vehicle_calibration__rosidl_typesupport_c.so"
+  "rosidl_typesupport_c/learning_based_vehicle_calibration/msg/longitudinal_processes__type_support.cpp"
+  "rosidl_typesupport_c/learning_based_vehicle_calibration/msg/longitudinal_progress__type_support.cpp"
+  "rosidl_typesupport_c/learning_based_vehicle_calibration/msg/steering_processes__type_support.cpp"
+  "rosidl_typesupport_c/learning_based_vehicle_calibration/msg/steering_progress__type_support.cpp"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/learning_based_vehicle_calibration__rosidl_typesupport_c.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

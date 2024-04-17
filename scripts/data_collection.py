@@ -52,6 +52,11 @@ class primotest(rclpy.node.Node):
             self.declare_parameter('brake_threshold1', 15)
             self.declare_parameter('brake_threshold2', 25)
             self.declare_parameter('consistency_threshold', 20)
+            self.declare_parameter('pitch_topic', "/sensing/gnss/chc/pitch")
+            self.declare_parameter('actuation_status_topic', "/vehicle/status/actuation_status")
+            self.declare_parameter('steering_status_topic', "/vehicle/status/steering_status")
+            self.declare_parameter('velocity_status_topic', "/vehicle/status/velocity_status")
+            self.declare_parameter('imu_topic', "/sensing/gnss/chc/imu")
 
             self.declare_parameter('Recovery_Mode', False)
 
@@ -70,6 +75,13 @@ class primotest(rclpy.node.Node):
             self.BRAKE_THRESHOLD1 = self.get_parameter('brake_threshold1').get_parameter_value().integer_value
             self.BRAKE_THRESHOLD2 = self.get_parameter('brake_threshold2').get_parameter_value().integer_value
             self.CONSISTENCY_THRESHOLD = self.get_parameter('consistency_threshold').get_parameter_value().integer_value
+            # Get topic names from parameters
+            self.pitch_topic = self.get_parameter('pitch_topic').get_parameter_value().string_value
+            self.actuation_status_topic = self.get_parameter('actuation_status_topic').get_parameter_value().string_value
+            self.steering_status_topic = self.get_parameter('steering_status_topic').get_parameter_value().string_value
+            self.velocity_status_topic = self.get_parameter('velocity_status_topic').get_parameter_value().string_value
+            self.imu_topic = self.get_parameter('imu_topic').get_parameter_value().string_value
+
 
             self.RECOVERY_MODE = self.get_parameter('Recovery_Mode').get_parameter_value().bool_value
 
@@ -270,11 +282,11 @@ class primotest(rclpy.node.Node):
             self.progress_bar15 = tqdm(initial = self.cc, total = self.MAX_DATA, desc = "                                        High speed: Brake > " + str(self.BRAKE_THRESHOLD2) + "            ", dynamic_ncols=True)
 
             
-            self.create_subscription(Float32, '/sensing/combination_navigation/chc/pitch', self.pitch_topic_callback, 1)
-            self.create_subscription(ActuationStatusStamped, '/vehicle/status/actuation_status', self.actuation_topic_callback, 1)
-            self.create_subscription(SteeringReport, '/vehicle/status/steering_status', self.steer_topic_callback, 1)
-            self.create_subscription(VelocityReport, '/vehicle/status/velocity_status', self.velocity_topic_callback, 1)
-            self.create_subscription(Imu, '/vehicle/status/imu', self.imu_topic_callback, 1)
+            self.create_subscription(Float32, self.pitch_topic, self.pitch_topic_callback, 1)
+            self.create_subscription(ActuationStatusStamped, self.actuation_status_topic, self.actuation_topic_callback, 1)
+            self.create_subscription(SteeringReport, self.steering_status_topic, self.steer_topic_callback, 1)
+            self.create_subscription(VelocityReport, self.velocity_status_topic, self.velocity_topic_callback, 1)
+            self.create_subscription(Imu, self.imu_topic, self.imu_topic_callback, 1)
             self.progress_throttle = self.create_publisher(LongitudinalProcesses, '/scenarios_collection_longitudinal_throttling', 10)
             self.progress_brake = self.create_publisher(LongitudinalProcesses, '/scenarios_collection_longitudinal_braking', 10)
 

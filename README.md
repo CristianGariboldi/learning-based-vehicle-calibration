@@ -28,7 +28,11 @@ ros2 launch learning_based_vehicle_calibration calibration_launch.py
 
 Inside this launch file there is a variable called 'Recovery_Mode', set to False by default. If while you were collecting data the software stopped for some reasons or something happened causing the interruption of your collection process, you can collect data recovering from previous breaking points by setting the variable to True. This way it will update the csv tables you have already started to collect without the need to start from scratch.
 
-You can visualize the collection process from the terminal. Otherwise, we built some custom messages for representing the progress that are being published on the following topics:
+You can visualize the collection process from the terminal. 
+
+![data_collection1](./imgs/data_collection1.png)
+
+Otherwise, we built some custom messages for representing the progress that are being published on the following topics:
 
 ```
 /scenarios_collection_longitudinal_throttling
@@ -36,27 +40,8 @@ You can visualize the collection process from the terminal. Otherwise, we built 
 /scenarios_collection_longitudinal_braking
 ```
 
-The structure of the message published to these topics is the following:
 
-```
-# LongitudinalProcesses.msg
 
-std_msgs/Header header
-learning_based_vehicle_calibration/LongitudinalProgress[] processes
-```
-
-With LongitudinalProgress.msg being:
-
-```
-# LongitudinalProgress.msg
-
-int64 pedal_value_start
-int64 pedal_value_end
-float64 velocity_start
-float64 velocity_end
-int64 data_count
-int64 progress
-```
 
 Once you have collected the data, in order to train and build your black box models, for both throttling and braking scenarios, launch:
 
@@ -64,7 +49,12 @@ Once you have collected the data, in order to train and build your black box mod
 ros2 launch learning_based_vehicle_calibration neural_network_launch.py
 ```
 
-### 3. Lateral Dynamics
+You will obtain the acceleration and braking calibration maps and visualize how the neural network fits the data:
+
+![NN_throttle](./imgs/NN_throttle.png)
+
+
+### 3. Steering Dynamics
 
 To start collecting data, launch in your workspace:
 
@@ -74,34 +64,17 @@ ros2 launch learning_based_vehicle_calibration calibration_steering_launch.py
 
 Also in this case, you can set the variable 'Recovery_Mode' to True if you need to recover from previous breaking points.
 
+You can visualize the collection process through the terminal:
+
+![data_collection_steer](./imgs/data_collection_steer.png)
+
 Also in this case, we built some custom messages for representing the progress that are being published on the following topic:
 
 ```
 /scenarios_collection_steering_progress
 ```
 
-The structure of the message published to this topic is the following:
 
-```
-# SteeringProcesses.msg
-
-std_msgs/Header header
-learning_based_vehicle_calibration/SteeringProgress[] processes
-```
-
-With SteeringProgress.msg being:
-
-```
-# SteeringProgress.msg
-
-int64 pedal_value_start
-int64 pedal_value_end
-float64 steering_value_start
-float64 steering_value_end
-float64 velocity_max
-int64 data_count
-int64 progress
-```
 
 To train and build your models, launch:
 
@@ -109,12 +82,24 @@ To train and build your models, launch:
 ros2 launch learning_based_vehicle_calibration neural_network_steering_launch.py
 ```
 
+You will obtain 5 different acceleration calibration maps, divided according to steering thresholds. Moreover, you will visualize the 5 neural networks trained for the different steering thresholds along with the real data. 
+
+Here is an example of the visualization for the steering range 5% - 20%:
+
+![NNsteer0](./imgs/NN_steer0.png)
+
+Instead, the model for the steering range 60% - 80% looks like this:
+
+![NNsteer](./imgs/NN_steer.png)s
+
+
+
 
 ## Overview
 
 Here we present the software structure, data collection, data preprocessing and neural network training and visualization about the end-to-end calibration of a vehicle, in two different scenarios: 
 - **Normal driving conditions (longitudinal dynamics);**
-- **Parking conditions (lateral dynamics).**
+- **Parking conditions (steering dynamics).**
 
 ## Input Data Software
 
@@ -124,7 +109,7 @@ Launch Autoware as follows:
 ./autoware.sh
 ```
 
-It is recommended to record the topics we need to collect in order to train our model. The data we need to record are the pitch angle, the linear acceleration, the velocity, the braking and throttling values and the steering angle:
+It is recommended to record the topics we need to collect in order to train our model. The data we need to record are the pitch angle, the linear acceleration, the velocity, the braking and throttling values and the steering angle (make sure to modify the name of the topics according to your vehicle):
 
 ```
 ros2 bag record /sensing/combination_navigation/chc/pitch /vehicle/status/actuation_status /vehicle/status/steering_status /vehicle/status/velocity_status /vehicle/status/imu
@@ -135,7 +120,8 @@ ros2 bag record /sensing/combination_navigation/chc/pitch /vehicle/status/actuat
 
 - **data_field: rosbag should contains brake_paddle, throttle_paddle, velocity, steering, imu and pitch**
 
-data contains as follows and how to get value
+Data's values and units of measure are as follows:
+
 ```
 # brake paddle value (frome 0 to 1, float)
 /vehicle/status/actuation_status -> status.brake_status
@@ -153,11 +139,8 @@ data contains as follows and how to get value
 
 
 
-- **launch data collection and data monitor scripts**
 
-```
-ros2 launch learning_based_vehicle_calibration calibration_launch.py
-```
+When you run the calibration, data_monitor script is launched automatically.
 
 Thanks to data_monitor script, we can make sure that we are receiving all the topics correctly, without any delay and any problem.
 
@@ -310,7 +293,7 @@ We can also visualize the setpoint (blue line) compared to the measured velocity
 
 We are now ready for the steering calibration tables.
 
-# 2. Lateral Dynamics
+# 2. Steering Dynamics
 
 Similarly to the Longitudinal Dynamics case, in this module we are going to collect data and train a neural network model to map velocity, throttling command and steering angle into acceleration. Thus, we will have another input, which is the steering angle.
 

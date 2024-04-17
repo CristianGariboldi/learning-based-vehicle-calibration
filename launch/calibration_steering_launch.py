@@ -49,6 +49,33 @@ def generate_launch_description():
             default_value='0.40',
             description='Radians value'
         ),
+        # Add launch arguments for topic names
+        launch.actions.DeclareLaunchArgument(
+            name='pitch_topic',
+            default_value='/sensing/gnss/chc/pitch',
+            description='Topic for pitch data'
+        ),
+        launch.actions.DeclareLaunchArgument(
+            name='actuation_status_topic',
+            default_value='/vehicle/status/actuation_status',
+            description='Topic for actuation status data (brake and acceleration)'
+        ),
+        launch.actions.DeclareLaunchArgument(
+            name='steering_status_topic',
+            default_value='/vehicle/status/steering_status',
+            description='Topic for steering status data'
+        ),
+        launch.actions.DeclareLaunchArgument(
+            name='velocity_status_topic',
+            default_value='/vehicle/status/velocity_status',
+            description='Topic for velocity status data'
+        ),
+        launch.actions.DeclareLaunchArgument(
+            name='imu_topic',
+            default_value='/sensing/gnss/chc/imu',
+            description='Topic for IMU data'
+        ),
+        
 
         launch.actions.DeclareLaunchArgument(
             'Recovery_Mode',
@@ -76,6 +103,11 @@ def generate_launch_description():
                 {'steering_threshold_3': launch.substitutions.LaunchConfiguration('steering_threshold_3')},
                 {'steering_threshold_4': launch.substitutions.LaunchConfiguration('steering_threshold_4')},
                 {'steering_threshold_5': launch.substitutions.LaunchConfiguration('steering_threshold_5')},
+                {'pitch_topic': launch.substitutions.LaunchConfiguration('pitch_topic')},
+                {'actuation_status_topic': launch.substitutions.LaunchConfiguration('actuation_status_topic')},
+                {'steering_status_topic': launch.substitutions.LaunchConfiguration('steering_status_topic')},
+                {'velocity_status_topic': launch.substitutions.LaunchConfiguration('velocity_status_topic')},
+                {'imu_topic': launch.substitutions.LaunchConfiguration('imu_topic')},
 
                 {'Recovery_Mode': launch.substitutions.LaunchConfiguration('Recovery_Mode')},
             ],

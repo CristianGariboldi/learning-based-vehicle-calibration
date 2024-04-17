@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from learning_based_vehicle_calibration/msg/LongitudinalProgress.msg
+// generated code does not contain a copyright notice
+
+
+module learning_based_vehicle_calibration {
+  module msg {
+    struct LongitudinalProgress {
+      int64 pedal_value_start;
+
+      int64 pedal_value_end;
+
+      double velocity_start;
+
+      double velocity_end;
+
+      int64 data_count;
+
+      int64 progress;
+    };
+  };
+};

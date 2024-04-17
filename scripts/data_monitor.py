@@ -20,19 +20,28 @@ class DataMonitor(rclpy.node.Node):
         self.can_timestamp = 0.0
         super().__init__('data_monitor')
 
+        self.declare_parameter('pitch_topic', "/sensing/gnss/chc/pitch")
+        self.declare_parameter('actuation_status_topic', "/vehicle/status/actuation_status")
+        self.declare_parameter('steering_status_topic', "/vehicle/status/steering_status")
+        self.declare_parameter('velocity_status_topic', "/vehicle/status/velocity_status")
+        self.declare_parameter('imu_topic', "/sensing/gnss/chc/imu")
+
+        # Get topic names from parameters
+        self.pitch_topic = self.get_parameter('pitch_topic').get_parameter_value().string_value
+        self.actuation_status_topic = self.get_parameter('actuation_status_topic').get_parameter_value().string_value
+        self.steering_status_topic = self.get_parameter('steering_status_topic').get_parameter_value().string_value
+        self.velocity_status_topic = self.get_parameter('velocity_status_topic').get_parameter_value().string_value
+        self.imu_topic = self.get_parameter('imu_topic').get_parameter_value().string_value
+
         self.timer = self.create_timer(1, self.timer_callback)
-        self.create_subscription(ActuationStatusStamped, '/vehicle/status/actuation_status', self.brake_topic_callback, 10)
-        self.create_subscription(ActuationStatusStamped, '/vehicle/status/actuation_status', self.drive_topic_callback, 10)
-        self.create_subscription(SteeringReport, '/vehicle/status/steering_status', self.steer_topic_callback, 10)
-        self.create_subscription(VelocityReport, '/vehicle/status/velocity_status', self.velocity_topic_callback, 10)
-        self.create_subscription(Float32, '/sensing/combination_navigation/chc/pitch', self.pitch_topic_callback, 10)
-        self.create_subscription(Imu, '/vehicle/status/imu', self.imu_topic_callback, 10)
-        self.create_subscription(Frame, '/from_can_bus', self.can_topic_callback, 10)
+        self.create_subscription(ActuationStatusStamped, self.actuation_status_topic, self.brake_topic_callback, 10)
+        self.create_subscription(ActuationStatusStamped, self.actuation_status_topic, self.drive_topic_callback, 10)
+        self.create_subscription(SteeringReport, self.steering_status_topic, self.steer_topic_callback, 10)
+        self.create_subscription(VelocityReport, self.velocity_status_topic, self.velocity_topic_callback, 10)
+        self.create_subscription(Float32, self.pitch_topic, self.pitch_topic_callback, 10)
+        self.create_subscription(Imu, self.imu_topic, self.imu_topic_callback, 10)
+        
 
-
-
-    def can_topic_callback(self, msg):
-        self.can_timestamp = int(self.get_clock().now().nanoseconds/1000000)
 
     def brake_topic_callback(self, msg):
         self.brake_timestamp = int(self.get_clock().now().nanoseconds/1000000)
@@ -59,7 +68,6 @@ class DataMonitor(rclpy.node.Node):
         self.get_logger().info("data monitor checking")
         timestamp = int(self.get_clock().now().nanoseconds/1000000)
         
-        can_timegap = timestamp - self.can_timestamp
         brake_timegap = timestamp - self.brake_timestamp
         throttle_timegap = timestamp - self.throttle_timestamp
         steering_timegap = timestamp - self.steering_timestamp
@@ -67,12 +75,6 @@ class DataMonitor(rclpy.node.Node):
         imu_timegap = timestamp - self.imu_timestamp
         velocity_timegap = timestamp - self.velocity_timestamp
 
-        if self.can_timestamp == 0:
-            self.get_logger().error("can topic is not publish")
-        elif can_timegap > 1000:
-            self.get_logger().error("can topic is not alive")
-        else:
-            self.get_logger().debug("can topic is good")
 
         if self.brake_timestamp == 0:
             self.get_logger().error("brake topic is not publish")
