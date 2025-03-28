@@ -16,13 +16,6 @@ install(
   scripts/neural_network_throttle.py
   scripts/throttle_data_visualization.py
   scripts/rosbag_collection.sh
-  scripts_steering/data_collection_steer.py
-  scripts_steering/neural_network_steer1.py
-  scripts_steering/neural_network_steer2.py
-  scripts_steering/neural_network_steer3.py
-  scripts_steering/neural_network_steer4.py
-  scripts_steering/neural_network_steer5.py
-  scripts_steering/data_monitor_steer.py
  
 
   DESTINATION lib/${PROJECT_NAME}
@@ -31,9 +24,7 @@ install(
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/LongitudinalProgress.msg"
-  "msg/SteeringProgress.msg"
   "msg/LongitudinalProcesses.msg"
-  "msg/SteeringProcesses.msg"
   DEPENDENCIES std_msgs
   
   )
