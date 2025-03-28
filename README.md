@@ -73,7 +73,7 @@ Launch Autoware as follows:
 It is recommended to record the topics we need to collect in order to train our model. The data we need to record are the pitch angle, the linear acceleration, the velocity, the braking and throttling values and the steering angle (make sure to modify the name of the topics according to your vehicle):
 
 ```
-ros2 bag record /sensing/combination_navigation/chc/pitch /vehicle/status/actuation_status /vehicle/status/steering_status /vehicle/status/velocity_status /vehicle/status/imu
+ros2 bag record /sensing/gnss/chc/pitch /vehicle/status/actuation_status /vehicle/status/steering_status /vehicle/status/velocity_status /vehicle/status/imu
 ```
 
 
@@ -95,7 +95,7 @@ Data's values and units of measure are as follows:
 # imu data(unit is rad/s or m/s)
 /vehicle/status/imu -> linear_acceleration.x
 # pitch angle (unit is degrees)
-/sensing/combination_navigation/chc/pitch -> data
+/sensing/gnss/chc/pitch -> data
 ```
 
 
